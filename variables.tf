@@ -1,3 +1,124 @@
+variable "flow_log_file_format" {
+  description = "(Optional) The format for the flow log. Valid values: `plain-text`, `parquet`"
+  type        = string
+  default     = null
+}
+
+variable "flow_log_cloudwatch_log_group_retention_in_days" {
+  description = "Specifies the number of days you want to retain log events in the specified log group for VPC flow logs"
+  type        = number
+  default     = null
+}
+
+variable "flow_log_cloudwatch_log_group_skip_destroy" {
+  description = " Set to true if you do not wish the log group (and any logs it may contain) to be deleted at destroy time, and instead just remove the log group from the Terraform state"
+  type        = bool
+  default     = false
+}
+
+variable "dhcp_options_domain_name_servers" {
+  description = "Specify a list of DNS server addresses for DHCP options set, default to AWS provided (requires enable_dhcp_options set to true)"
+  type        = list(string)
+  default     = ["AmazonProvidedDNS"]
+}
+
+variable "flow_log_cloudwatch_iam_role_conditions" {
+  description = "Additional conditions of the CloudWatch role assumption policy"
+  type = list(object({
+    test     = string
+    variable = string
+    values   = list(string)
+  }))
+  default = []
+}
+
+variable "public_inbound_acl_rules" {
+  description = "Public subnets inbound network ACLs"
+  type        = list(map(string))
+  default = [
+    {
+      rule_number = 100
+      rule_action = "allow"
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      cidr_block  = "0.0.0.0/0"
+    },
+  ]
+}
+
+#set
+variable "example_set" {
+  type    = set(string)
+  default = ["foo", "bar"]
+}
+
+
+
+
+
+variable "vpc_flow_log_tags" {
+  description = "Additional tags for the VPC Flow Logs"
+  type        = map(string)
+  default     = {}
+}
+
+variable "public_subnet_tags_per_az" {
+  description = "Additional tags for the public subnets where the primary key is the AZ"
+  type        = map(map(string))
+  default     = {}
+}
+
+variable "vpc_block_public_access_exclusions" {
+  description = "A map of VPC block public access exclusions"
+  type        = map(any)
+  default     = {}
+}
+
+
+
+
+#object
+
+
+#tuple
+
+
+
+#any
+variable "options" {
+  description = "A list of Options to apply"
+  type        = any
+  default     = []
+}
+
+variable "serverless_config" {
+  description = "The serverless config of the instance."
+  type = list(object({
+    max_capacity = number
+    min_capacity = number
+    auto_pause   = optional(bool, "abc")
+    switch_force = optional(bool, null)
+  }))
+  default = []
+}
+
+variable "buckets" {
+  type = list(object({
+    name    = string
+    enabled = optional(bool, true)
+    website = optional(object({
+      index_document = optional(string, "index.html")
+      error_document = optional(string, "error.html")
+      routing_rules  = optional(string)
+    }), {})
+  }))
+}
+
+
+
+
+
 ################################################################################
 # VPC
 ################################################################################
