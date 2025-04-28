@@ -46,7 +46,7 @@ module "vpc_1" {
   source = "git::https://example.com/vpc.git?depth=1&ref=v1.2.0"
 }
 
-module "storage" {
+module "storage_1" {
   source = "git::username@example.com:storage.git"
 }
 
