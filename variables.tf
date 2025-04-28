@@ -1,3 +1,77 @@
+module "servers" {
+  source = "./app-cluster"
+
+  servers = 5
+}
+
+module "consul_aws" {
+  source  = "hashicorp/consul/aws"
+  version = "0.0.5"
+
+  servers = 3
+}
+
+module "consul" {
+  source = "./consul"
+}
+
+module "consul_azure" {
+  source = "app.terraform.io/example-corp/k8s-cluster/azurerm"
+  version = "1.1.0"
+}
+
+module "consul_github" {
+  source = "github.com/hashicorp/example"
+}
+
+module "consul_github_1" {
+  source = "git@github.com:hashicorp/example.git"
+}
+
+module "consul_bitbucket" {
+  source = "bitbucket.org/hashicorp/terraform-consul-aws"
+}
+
+# select a specific tag
+module "vpc" {
+  source = "git::https://example.com/vpc.git?ref=v1.2.0"
+}
+
+# directly select a commit using its SHA-1 hash
+module "storage" {
+  source = "git::https://example.com/storage.git?ref=51d462976d84fdea54b47d80dcabbf680badcdb8"
+}
+
+module "vpc_1" {
+  source = "git::https://example.com/vpc.git?depth=1&ref=v1.2.0"
+}
+
+module "storage" {
+  source = "git::username@example.com:storage.git"
+}
+
+module "vpc_2" {
+  source = "hg::http://example.com/vpc.hg"
+}
+
+module "vpc_3" {
+  source = "https://example.com/vpc-module.zip"
+}
+
+module "consul_s3" {
+  source = "s3::https://s3-eu-west-1.amazonaws.com/examplecorp-terraform-modules/vpc.zip"
+}
+
+module "consul_gcs" {
+  source = "gcs::https://www.googleapis.com/storage/v1/modules/foomodule.zip"
+}
+
+
+
+
+
+
+
 output "security_group_arn1" {
   description = "Amazon Resource Name (ARN) of the security group"
   value       = try(aws_security_group.this[0].arn, null)
