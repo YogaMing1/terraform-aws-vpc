@@ -1,3 +1,9 @@
+output "security_group_arn1" {
+  description = "Amazon Resource Name (ARN) of the security group"
+  value       = try(aws_security_group.this[0].arn, null)
+}
+
+
 terraform {
   required_version = ">= 1.3.2"
 
