@@ -1,3 +1,22 @@
+terraform {
+  required_version = ">= 1.3.2"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.95"
+    }
+    tls = {
+      source  = "hashicorp/tls"
+      version = ">= 3.0"
+    }
+    time = {
+      source  = "hashicorp/time"
+      version = ">= 0.9"
+    }
+  }
+}
+
 module "kms" {
   source  = "terraform-aws-modules/kms/aws"
   version = "2.1.0" # Note - be mindful of Terraform/provider version compatibility between modules
