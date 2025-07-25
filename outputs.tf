@@ -1,3 +1,14 @@
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~> 18.0"
+
+  cluster_name    = random_pet.this.id
+  cluster_version = "1.21"
+
+  vpc_id     = data.aws_vpc.default.id
+  subnet_ids = data.aws_subnets.all.ids
+}
+
 variable "testVariable" {
   description = "(Optional) The format for the flow log. Valid values: `plain-text`, `parquet`"
   type        = string
