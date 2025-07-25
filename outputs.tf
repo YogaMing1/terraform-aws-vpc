@@ -1,3 +1,7 @@
+module "local_module" {
+  source = "./modules/vpc-endpoints"
+}
+
 module "iam_eks_role" {
   source    = "../../modules/iam-eks-role"
   role_name = "my-app"
