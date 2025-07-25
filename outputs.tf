@@ -1,3 +1,20 @@
+module "iam_eks_role" {
+  source    = "../../modules/iam-eks-role"
+  role_name = "my-app"
+
+  cluster_service_accounts = {
+    (random_pet.this.id) = ["default:my-app"]
+  }
+
+  tags = {
+    Name = "eks-role"
+  }
+
+  role_policy_arns = {
+    AmazonEKS_CNI_Policy = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  }
+}
+
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 18.0"
